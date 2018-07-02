@@ -1,54 +1,23 @@
 import React from 'react';
 import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
+import FadeInView from './FadeInView'
 //import BottomNav from "./bottom-nav.js";
 
-class FadeInView extends React.Component {
-  state = {
-    fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
-  }
 
-  componentDidMount() {
-    console.log(Animated)
-    Animated.timing(                  // Animate over time
-      this.state.fadeAnim,            // The animated value to drive
-      {
-        toValue: 1,                   // Animate to opacity: 1 (opaque)
-        duration: 10000,              // Make it take a while
-      }
-    ).start();                        // Starts the animation
-  }
-
-  render() {
-    let { fadeAnim } = this.state;
-
-    return (
-      <Animated.View                 // Special animatable View
-        style={{
-          ...this.props.style,
-          opacity: fadeAnim,         // Bind opacity to animated value
-        // Bind opacity to animated value
-        }}
-      >
-        {this.props.children}
-      </Animated.View>
-    );
-  }
-}
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-      <FadeInView style={{width: 250, height: 50, backgroundColor: 'powderblue'}}>
-      <Text>Have you been in an accident</Text>
-      </FadeInView>
-        <Text style={styles.title}></Text>
+      <View height={'100%'} width={'100%'}>
+        <View style={styles.container}>
+          <FadeInView />
+        </View>
         <View style={styles.nav}>
-        <View style={{width: 40, height: 40, backgroundColor: 'black'}}></View>
-        <View style={{width: 40, height: 40, backgroundColor: 'black'}}></View>
-        <View style={{width: 40, height: 40, backgroundColor: 'black'}}></View>
-        <View style={{width: 40, height: 40, backgroundColor: 'black'}}></View>
-        <View style={{width: 40, height: 40, backgroundColor: 'black'}}></View>
+          <Icon name="user-circle" style={styles.nav_icon}></Icon>
+          <Icon name="car" style={styles.nav_icon}></Icon>
+          <Icon name="th-list" style={styles.nav_icon}></Icon>
         </View>
       </View>
     );
@@ -56,26 +25,25 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  nav_icon: {
+    color: "#a6a6a6",
+    fontSize: 50
   },
-  title: {
-    fontSize: 50,
-    textAlign: 'center',
-    color: 'lightblue',
+  container: {
+    backgroundColor: 'white',
+    flex: 1,
+    justifyContent: 'flex-start',
+    height: '30%',
+    width: '100%'
   },
   nav: {
     flex: 1,
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
-    height: 100,
+    height: 80,
     width: '100%',
-    backgroundColor: 'lightblue',
+    backgroundColor: '#808080',
     alignItems: 'center',
     justifyContent: 'space-around',
   },
