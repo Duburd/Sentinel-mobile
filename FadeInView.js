@@ -24,7 +24,7 @@ export default class FadeInView extends React.Component {
       this.state.fadeAnim,            // The animated value to drive
       {
         toValue: 1,                   // Animate to opacity: 1 (opaque)
-        duration: 10000,              // Make it take a while
+        duration: 1000,              // Make it take a while
       }
     ).start();                        // Starts the animation
 
@@ -62,32 +62,10 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center'
   },
-  nav_icon: {
-    color: "#3b5998",
-    fontSize: 50
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   title: {
     fontSize: 40,
     textAlign: 'center',
     color: 'white',
     borderRadius: 0
-  },
-  nav: {
-    flex: 1,
-    flexDirection: 'row',
-    position: 'absolute',
-    bottom: 0,
-    height: 80,
-    width: '100%',
-    backgroundColor: 'lightblue',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
+  }
 });
