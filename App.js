@@ -5,12 +5,17 @@ import HomeIndex from './src/home/index.js'
 export default class App extends React.Component {
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {
+      currentView: <HomeIndex changeMainView={this.changeMainView}/>
+    }
+  }
+  changeMainView = () => {
+    this.state.currentView = (this.state.currentView === <HomeIndex /> ? <AddReport /> : <HomeIndex />)
   }
   render() {
     return (
       <View height={'100%'} width={'100%'}>
-        <HomeIndex />
+        {this.state.currentView}
       </View>
     );
   }
