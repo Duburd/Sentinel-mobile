@@ -32,7 +32,6 @@ export default class Profile extends React.Component {
         <Text>{this.state.users.results[0].email}</Text>
         <Text>cell: {this.state.users.results[0].cell}</Text>
         <Text>policy number: {this.state.users.results[0].id.value}</Text>
-        <Text>Matt Greff</Text>
       </View>
     );
   }

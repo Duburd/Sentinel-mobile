@@ -45,7 +45,7 @@
   },
   "picture": {
     "large": "",
-    "medium": "https://randomuser.me/api/portraits/thumb/women/49.jpg",
+    "medium": "./../../../assets/images/profile.png",
     "thumbnail": ""
   },
   "nat": ""

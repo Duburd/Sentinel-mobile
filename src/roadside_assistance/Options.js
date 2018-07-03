@@ -8,32 +8,30 @@ export default class Options extends React.Component {
     this.state = {}
   }
   render() {
-    return (
+    return (   
       <View height={'100%'} width={'100%'}>
-        <Tile imageSrc={ require('./../../assets/images/roadside.jpg')}    
-          height={320} 
-          title={'hi'}
-          icon={{ name: 'gesture-tap', type: 'material-community', color: 'white', size: 30}}
-          featured
-          caption="tap here..."
-          onPress={()=> Alert.alert('Hey 1')}
-        />      
-        <Tile imageSrc={ require('./../../assets/images/roadside.jpg')}
-          height={320} 
-          title={'hi'}
-          icon={{ name: 'gesture-tap', type: 'material-community', color: 'white', size: 40}} 
+        <Tile imageSrc={ require('./../../assets/images/report.jpg')}
+          height={520} 
+          title={'Start Report'}
+          icon={{ name: 'new-message', type: 'entypo', color: 'white', size: 40}} 
           featured
           caption="tap here..."
           onPress={()=> Alert.alert('Hey 2')}
-        />      
-        <Tile imageSrc={ require('./../../assets/images/roadside.jpg')}    
-          height={320} 
-          title={'hi'}
-          icon={{ name: 'gesture-tap', type: 'material-community', color: 'white', size: 40}} 
-          featured
-          caption="tap here..."
-          onPress={()=> Alert.alert('Hey 3')}
         />
+        <Tile imageSrc={ require('./../../assets/images/contact.jpg')}    
+          height={320} 
+          title={'Unsure whether or not to file a report? then contact a representitive.'}
+          icon={{ name: 'ios-phone-portrait', type: 'ionicon', color: 'white', size: 40}}
+          featured
+          onPress={()=> Alert.alert(Text.type)}
+        />
+        <Tile
+          height={120}
+          title={'Go Back'}
+          icon={{ name: 'long-arrow-left', type: 'font-awesome', color: 'white', size: 40}} 
+          featured
+          onPress={()=> this.props.changeMainView()}
+          />
       </View>
     );
   }

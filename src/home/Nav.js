@@ -1,6 +1,7 @@
 import React from 'react';
 import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import IconF from 'react-native-vector-icons/FontAwesome';
+import IconI from 'react-native-vector-icons/Ionicons';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ButtonGroup } from 'react-native-elements'
 import { Constants } from 'expo';
@@ -20,9 +21,9 @@ export default class Nav extends React.Component {
   }
   
   render () {
-    const buttons = [<Icon name="user-circle" style={styles.nav_icon}/>,
-    <Icon name="car" style={styles.nav_icon}/>,
-    <Icon name="th-list" style={styles.nav_icon}/>]
+    const buttons = [<IconF name="user-circle" style={styles.nav_icon}/>,
+    <IconI name="ios-car" style={styles.nav_icon}/>,
+    <IconF name="th-list" style={styles.nav_icon}/>]
     const { selectedIndex } = this.state
   
     return (

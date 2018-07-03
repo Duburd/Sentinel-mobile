@@ -12,8 +12,11 @@ export default class App extends React.Component {
     }
   }
   changeMainView() {
+    const options = <Options   changeMainView = {this.changeMainView}/>
+    const home    = <HomeIndex changeMainView = {this.changeMainView}/>
+    const currentView = (this.state.currentView.type === options.type ? home : options)
     this.setState({
-      currentView: <Options />
+      currentView
     })
   }
   render() {
