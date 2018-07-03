@@ -35,20 +35,8 @@ export default class Nav extends React.Component {
     )
   }
 }
-{/* <View style={styles.nav}>
-<Icon name="user-circle" style={styles.nav_icon}/>
-<Icon name="car" style={styles.nav_icon}/>
-<Icon name="th-list" style={styles.nav_icon}/>
-</View> */}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-  },
     nav_icon: {
       color: "#a6a6a6",
       fontSize: 50

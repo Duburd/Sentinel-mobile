@@ -48,7 +48,7 @@ export default class FadeInView extends React.Component {
       icon={{ name: 'gesture-tap', type: 'material-community', color: 'white', size: 40}} 
       featured
       caption="tap here..."
-      onPress={this.props.changeMainView()}
+      onPress={()=> this.props.changeMainView()}
 />
         {this.props.children}
       </Animated.View>
@@ -56,7 +56,6 @@ export default class FadeInView extends React.Component {
   }
 
 }
-
 
 const styles = StyleSheet.create({
   assist_button: {

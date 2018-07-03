@@ -28,12 +28,4 @@ export default class HomeIndex extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    flex: 1,
-    justifyContent: 'flex-start',
-    height: '30%',
-    width: '100%'
-  }
-});
+const styles = StyleSheet.create({});

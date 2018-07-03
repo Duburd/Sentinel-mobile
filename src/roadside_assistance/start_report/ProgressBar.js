@@ -16,11 +16,13 @@ export default class ProgressBar extends React.Component {
   
   updateIndex (selectedIndex) {
     this.setState({selectedIndex})
-    this.props.currentTab(selectedIndex)
   }
   
   render () {
-    const buttons = [<Icon name="user-circle" style={styles.nav_icon}/>,
+    const buttons = [
+    <IconM name="help-network" style={styles.nav_icon}/>,
+    <Icon name="car" style={styles.nav_icon}/>,
+    <Icon name="car" style={styles.nav_icon}/>,
     <Icon name="car" style={styles.nav_icon}/>,
     <Icon name="th-list" style={styles.nav_icon}/>]
     const { selectedIndex } = this.state
@@ -35,20 +37,8 @@ export default class ProgressBar extends React.Component {
     )
   }
 }
-{/* <View style={styles.nav}>
-<Icon name="user-circle" style={styles.nav_icon}/>
-<Icon name="car" style={styles.nav_icon}/>
-<Icon name="th-list" style={styles.nav_icon}/>
-</View> */}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-  },
     nav_icon: {
       color: "#a6a6a6",
       fontSize: 50
