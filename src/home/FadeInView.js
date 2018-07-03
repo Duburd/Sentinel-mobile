@@ -1,12 +1,13 @@
 import React from 'react';
-import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
+import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Tile } from 'react-native-elements';
 
 export default class FadeInView extends React.Component {
   state = {
     tooltips: [
-      'Roadside Assistance',
+      'Roadside Assistance?',
       'As difficult as it may seem, it is important that you remain calm.',
       'Do not argue with other drivers and passengers. Save your story for the police.',
       'Do not voluntarily assume liability or take responsibility, sign statements regarding fault, or promise to pay for damage at the scene of the accident.',
@@ -41,11 +42,13 @@ export default class FadeInView extends React.Component {
         // Bind opacity to animated value
         }}
       >
-      <View style={styles.assist_button}>
-        <IconM name="gesture-tap" size={50} color={'white'}>
-          <Text style={styles.title}>{this.state.tooltips[0]}</Text>
-        </IconM>
-      </View>
+      <Tile imageSrc={ require('./../../assets/images/roadside.jpg')}    
+      height={280} 
+      title={this.state.tooltips[0]}
+      icon={{ name: 'gesture-tap', type: 'material-community', color: 'white', size: 40}} 
+      featured
+      caption="tap here..."
+/>
         {this.props.children}
       </Animated.View>
     );
@@ -56,7 +59,7 @@ export default class FadeInView extends React.Component {
 
 const styles = StyleSheet.create({
   assist_button: {
-    paddingTop: '20%',
+    height: '37%',
     paddingBottom: '10%',
     backgroundColor: '#ffc000',
     width: '100%',
