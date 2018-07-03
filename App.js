@@ -1,20 +1,29 @@
-import React from 'react';
 import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
-import HomeIndex from './src/home/index.js'
-import Options from './src/roadside_assistance/Options.js'
+import React      from 'react';
+import HomeIndex  from './src/home/index.js'
+import Options    from './src/roadside_assistance/Options.js'
+import ToolTips1  from './src/roadside_assistance/start_report/ToolTips1.js'
+import Camera     from './src/roadside_assistance/start_report/Camera.js'
+import Form       from './src/roadside_assistance/start_report/Form.js'
 
 export default class App extends React.Component {
   constructor(props){
     super(props)
     this.changeMainView = this.changeMainView.bind(this)
     this.state = {
-      currentView: <HomeIndex changeMainView={this.changeMainView}/>
+      currentView: <HomeIndex changeMainView = {this.changeMainView}/>,
+      allViews: {
+        home:    HomeIndex,
+        options: Options,
+        report:  ToolTips1,
+        camera:  Camera,
+        form:    Form,
+      }
     }
   }
-  changeMainView() {
-    const options = <Options   changeMainView = {this.changeMainView}/>
-    const home    = <HomeIndex changeMainView = {this.changeMainView}/>
-    const currentView = (this.state.currentView.type === options.type ? home : options)
+  changeMainView(nextViewKey) {
+    const CurrentClass = this.state.allViews[nextViewKey]
+    const currentView = <CurrentClass changeMainView = {this.changeMainView}/>
     this.setState({
       currentView
     })
