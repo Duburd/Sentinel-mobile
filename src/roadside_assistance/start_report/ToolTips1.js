@@ -10,6 +10,7 @@ export default class ToolTips1 extends React.Component {
     this.state = {}
   }
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View height={'100%'} width={'100%'}>
         <Tile imageSrc={ require('./../../../assets/images/contact.jpg')}    
@@ -17,21 +18,21 @@ export default class ToolTips1 extends React.Component {
           title={'back from Tooltips'}
           icon={{ name: 'ios-phone-portrait', type: 'ionicon', color: 'white', size: 40}}
           featured
-          onPress={()=> this.props.changeMainView('options')}
+          onPress={()=> navigate('options')}
         />
         <Tile imageSrc={ require('./../../../assets/images/contact.jpg')}    
           height={200} 
           title={'form'}
           icon={{ name: 'ios-phone-portrait', type: 'ionicon', color: 'white', size: 40}}
           featured
-          onPress={()=> this.props.changeMainView('form')}
+          onPress={()=> navigate('form')}
         />
         <Tile imageSrc={ require('./../../../assets/images/contact.jpg')}    
           height={200} 
           title={'camera'}
           icon={{ name: 'ios-phone-portrait', type: 'ionicon', color: 'white', size: 40}}
           featured
-          onPress={()=> this.props.changeMainView('camera')}
+          onPress={()=> navigate('camera')}
         />
       </View>
     );

@@ -4,7 +4,7 @@ import ProgressBar from './ProgressBar'
 import { Tile } from 'react-native-elements';
 
 
-export default class Form extends React.Component {
+export default class Contact extends React.Component {
   constructor(props){
     super(props)
     this.state = {}

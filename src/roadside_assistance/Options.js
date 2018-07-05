@@ -8,6 +8,7 @@ export default class Options extends React.Component {
     this.state = {}
   }
   render() {
+    const {navigate} = this.props.navigation
     return (   
       <View height={'100%'} width={'100%'}>
         <Tile imageSrc={ require('./../../assets/images/report.jpg')}
@@ -16,22 +17,15 @@ export default class Options extends React.Component {
           icon={{ name: 'new-message', type: 'entypo', color: 'white', size: 40}} 
           featured
           caption="tap here..."
-          onPress={()=> this.props.changeMainView('report')}
+          onPress={()=> navigate('report')}
         />
         <Tile imageSrc={ require('./../../assets/images/contact.jpg')}    
-          height={320} 
+          height={250} 
           title={'Unsure whether or not to file a report? then contact a representitive.'}
           icon={{ name: 'ios-phone-portrait', type: 'ionicon', color: 'white', size: 40}}
           featured
-          onPress={()=> this.props.changeMainView('contact')}
+          onPress={()=> navigate('contact')}
         />
-        <Tile
-          height={120}
-          title={'Go Back'}
-          icon={{ name: 'long-arrow-left', type: 'font-awesome', color: 'white', size: 40}} 
-          featured
-          onPress={()=> this.props.changeMainView('home')}
-          />
       </View>
     );
   }

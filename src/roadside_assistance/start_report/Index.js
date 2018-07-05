@@ -10,15 +10,10 @@ export default class ReportMain extends React.Component {
     this.state = {}
   }
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View height={'100%'} width={'100%'}>
-        <Tile imageSrc={ require('./../../../assets/images/contact.jpg')}    
-          height={320} 
-          title={'Unsure whether or not to file a report? then contact a representitive.'}
-          icon={{ name: 'ios-phone-portrait', type: 'ionicon', color: 'white', size: 40}}
-          featured
-          onPress={()=> this.props.changeMainView('home')}
-        />
+         <ProgressBar />
       </View>
     );
   }

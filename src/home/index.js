@@ -20,7 +20,7 @@ export default class HomeIndex extends React.Component {
   render() {
     return (
       <View height={'100%'} width={'100%'}>
-        <FadeInView changeMainView={this.props.changeMainView}/>
+        <FadeInView navigation={this.props.navigation}/>
         {this.state.tab}
         <Nav currentTab={this.currentTab}/>
       </View>

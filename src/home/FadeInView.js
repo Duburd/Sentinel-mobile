@@ -32,6 +32,8 @@ export default class FadeInView extends React.Component {
   }
 
   render() {
+
+    const { navigate } = this.props.navigation;
     let { fadeAnim } = this.state;
 
     return (
@@ -43,12 +45,10 @@ export default class FadeInView extends React.Component {
         }}
       >
       <Tile imageSrc={ require('./../../assets/images/roadside.jpg')}    
-      height={280} 
-      title={this.state.tooltips[0]}
-      icon={{ name: 'gesture-tap', type: 'material-community', color: 'white', size: 40}} 
+      height={200} 
+      title={'Tap For Roadside Assistance'}
       featured
-      caption="tap here..."
-      onPress={()=> this.props.changeMainView('options')}
+      onPress={()=> navigate('options')}
 />
         {this.props.children}
       </Animated.View>
@@ -60,7 +60,7 @@ export default class FadeInView extends React.Component {
 const styles = StyleSheet.create({
   assist_button: {
     height: '37%',
-    paddingBottom: '10%',
+    paddingBottom: '5%',
     backgroundColor: '#ffc000',
     width: '100%',
     alignItems: 'center'
