@@ -23,12 +23,12 @@ export default class Profile extends React.Component {
           style={styles.avatar}
           xlarge
           rounded
-          source={{uri: 'http://kuf.klr.dev.edudigital.agency/files/2018/06/blank-user.png'}}
+          source={{uri: this.state.user[0].uri}}
           onPress={() => console.log("Works!")}
           activeOpacity={0.7}
         />
         <Text>cell: {this.state.user[0].phone_number}</Text>
-        <Text>license_number number: {this.state.user[0].license_number}</Text>
+        <Text>number: {this.state.user[0].license_number}</Text>
         <Text>policy number: {this.state.user[0].policy_number}</Text>
         <Divider style={{ backgroundColor: 'blue', height: 20, borderStyle: 'solid' }} />
         <Vehicles />
