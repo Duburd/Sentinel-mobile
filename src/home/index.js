@@ -13,8 +13,9 @@ export default class HomeIndex extends React.Component {
       tab: <Profile/>
     }
   }
+
   currentTab = (tabIndex) => {
-    const tab = [<Profile/>,<Vehicles/>,<Reports/>][tabIndex]
+    const tab = [<Profile/>,<Reports/>][tabIndex]
     this.setState({tab})
   }
   render() {

@@ -21,9 +21,10 @@ export default class Nav extends React.Component {
   }
   
   render () {
-    const buttons = [<IconF name="user-circle" style={styles.nav_icon}/>,
-    <IconI name="ios-car" style={styles.nav_icon}/>,
-    <IconF name="th-list" style={styles.nav_icon}/>]
+    const buttons = [
+      <IconF name="user-circle" style={styles.nav_icon}/>,
+      <IconF name="th-list"     style={styles.nav_icon}/>
+    ]
     const { selectedIndex } = this.state
   
     return (
