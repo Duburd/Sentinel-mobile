@@ -1,16 +1,31 @@
 import React from 'react';
-import { Picker, Animated, Alert, AppRegistry, Button, StyleSheet, ScrollView, Text } from 'react-native';
+import { Platform, Picker, Animated, Alert, AppRegistry, Button, StyleSheet, ScrollView, Text} from 'react-native';
+import {FormInput, FormLabel} from 'react-native-elements'
 import ProgressBar from './ProgressBar'
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { Constants, Location, Permissions } from 'expo';
 import fake_user from './fake_user.json';
 
 export default class Form extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      currentDriver: '',
-      currentVehicle: '',
+      currentDriver: null,
+      currentVehicle: null,
+      location: null,
+      address: null,
+      errorMessage: null,
+      additionalDrivers: 0,
+      description: '', 
+    }
+  }
 
+  componentWillMount() {
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
     }
   }
 
@@ -18,6 +33,8 @@ export default class Form extends React.Component {
     fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/3')
       .then((results)=> results.json())
       .then((users_data) => {
+        currentDriver = users_data[0].id
+        this.setState({currentDriver})
         users = users_data.map( (_) => (
           <Picker.Item label= {`${_.first_name} ${_.last_name}`} value={_.id}/>
         ))
@@ -25,6 +42,8 @@ export default class Form extends React.Component {
     fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/10/vehicles')
       .then((results) => results.json())
       .then((vehicle_data) => {
+        currentVehicle = vehicle_data[0].id
+        this.setState({currentVehicle})
         vehicles = vehicle_data.map((_) => (
             <Picker.Item label= {`${_.make} ${_.model}`} value={_.id}/>
       ))
@@ -32,12 +51,68 @@ export default class Form extends React.Component {
       });
   }
 
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({
+      location
+    });
+    let address = await Location.reverseGeocodeAsync(location.coords)
+    this.setState({
+      address
+    });
+  };
+
+  formSubmit = () => {
+    const { street, city, region, country, postalCode } = this.state.address[0];
+    const address = `${street} ${city} ${region} ${country} ${postalCode}`
+    reportObj = {
+      location: address,
+      description: this.state.description,
+      status: "Pending",
+      user_id: this.state.currentDriver,
+      vehicle_id: this.state.currentVehicle,
+    }
+    report = JSON.stringify(reportObj)
+    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/reports', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: report
+    }).then(function (response) {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return response.json()
+       .then(function (data) {
+        const {navigate} = this.props.navigation
+        navigate('Contact')
+      }).catch(function (err) {
+        console.log(err)
+      });;
+    })
+    }
+
   render() {
+
+    let text = { postalCode: 'Waiting for location...' };
+    if (this.state.errorMessage) {
+      text = this.state.errorMessage;
+    } else if (this.state.address) {
+      text = this.state.address[0];
+    }
+
     const { navigate } = this.props.navigation;
     return (
       <ScrollView height={'100%'} width={'100%'} style={{flex: 1}}>
 
         <Text style={styles.title}>Report</Text>
+        <Text style={styles.subtitle}>{text.postalCode} {text.street}</Text>
+        <Text style={styles.subtitle}> {text.city} {text.region}</Text>
         <FormLabel>Current Driver</FormLabel>
         <Picker 
           selectedValue = {this.state.currentDriver}
@@ -52,23 +127,27 @@ export default class Form extends React.Component {
           onValueChange={(itemValue, itemIndex) => this.setState({currentVehicle: itemValue})}>
           {this.state.vehicles}
         </Picker>
-        <Text style={styles.subtitle}>Report</Text>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>Description Of Events</FormLabel>
+        <FormInput 
+          onChangeText={(text) => this.setState({description: text})} 
+          value={this.state.username} 
+          editable = {true}
+          maxLength = {40} multiline = {true}
+          numberOfLines = {4}
+          />
+        <Text style={styles.subtitle}>Other Drivers</Text>
+        <Text style={styles.subtitle}>Driver</Text>
+        <FormLabel>First Name</FormLabel>
         <FormInput onChangeText={(text) => this.setState({username: text})} value={this.state.username}/>
-        <FormValidationMessage>Error message</FormValidationMessage>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>Last Name</FormLabel>
         <FormInput />
-        <FormValidationMessage>Error message</FormValidationMessage>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>Insurance Policy Number</FormLabel>
         <FormInput />
-        <FormValidationMessage>Error message</FormValidationMessage>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>Licence Number</FormLabel>
         <FormInput />
-        <FormValidationMessage>Error message</FormValidationMessage>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>Phone Number</FormLabel>
         <FormInput />
-        <FormValidationMessage>Error message</FormValidationMessage>
-        
+        <Button title={'Submit Claim For Review'} onPress={()=> this.formSubmit()}/>
       </ScrollView>
     );
   }

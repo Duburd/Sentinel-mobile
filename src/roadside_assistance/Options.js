@@ -20,7 +20,7 @@ export default class Options extends React.Component {
           onPress={()=> navigate('report')}
         />
         <Tile imageSrc={ require('./../../assets/images/contact.jpg')}    
-          height={250} 
+          height={320} 
           title={'Unsure whether or not to file a report? then contact a representitive.'}
           icon={{ name: 'ios-phone-portrait', type: 'ionicon', color: 'white', size: 40}}
           featured

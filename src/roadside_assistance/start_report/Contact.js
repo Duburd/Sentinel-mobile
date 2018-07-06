@@ -1,24 +1,46 @@
 import React from 'react';
-import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
-import ProgressBar from './ProgressBar'
+import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text, linking } from 'react-native';
 import { Tile } from 'react-native-elements';
-
+import { WebBrowser } from 'expo';
+import fake_user from './fake_user.json';
+import { Linking } from 'react-native';
 
 export default class Contact extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      user: [fake_user]
+    }
+  }
+  componentDidMount(){
+    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/3')
+      .then((results)=> results.json())
+      .then((user) => {this.setState({user})});
   }
   render() {
-    const { navigate } = this.props.navigation;
     return (
-      <View height={'100%'} width={'100%'}>
-
+      <View style={styles.column}>
+        <Tile imageSrc={ require('./../../../assets/images/customer_service.jpg')}
+          height={520} 
+          title={'Contact A Representitive'}
+          icon={{ name: 'md-contacts', type: 'ionicon', color: 'white', size: 40}} 
+          featured
+          onPress={()=> Linking.openURL('tel://7788555726')}
+        />
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
+  column: {
+    padding: 10,
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%'
+  },
   title: {
     fontSize: 40,
     textAlign: 'center',
