@@ -106,6 +106,8 @@ export default class CameraScreen extends React.Component {
   takePicture = () => {
     if (this.camera) {
       this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
+    } else {
+      Alert.alert(`${FileSystem.documentDirectory}photos/${Date.now()}.jpg`)
     }
   };
 
@@ -114,6 +116,7 @@ export default class CameraScreen extends React.Component {
       from: photo.uri,
       to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
     });
+    Alert.alert(`${FileSystem.documentDirectory}photos/${Date.now()}.jpg`)
     this.setState({ newPhotos: true });
   }
 
