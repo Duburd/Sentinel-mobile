@@ -6,16 +6,6 @@ import { Tile } from 'react-native-elements';
 
 export default class FadeInView extends React.Component {
   state = {
-    tooltips: [
-      'Roadside Assistance?',
-      'As difficult as it may seem, it is important that you remain calm.',
-      'Do not argue with other drivers and passengers. Save your story for the police.',
-      'Do not voluntarily assume liability or take responsibility, sign statements regarding fault, or promise to pay for damage at the scene of the accident.',
-      'Stop. If your vehicle is involved in an accident and you don\'t stop, you may be subject to criminal prosecution.',
-      'If no one is injured and total damage to all the vehicles involved appears to be less than $2,000, call a Collision Reporting Centre',
-      'Otherwise. Call the police.',
-      'If safe to do so, let\'s take some pictures to document the situation.'
-    ],
     fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
   }
 
