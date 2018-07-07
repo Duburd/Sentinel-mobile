@@ -17,7 +17,7 @@ export default class Vehicles extends React.Component {
       .then((results) => results.json())
       .then((vehicle_data) => {
         vehicles = vehicle_data.map((vehicle) => (
-          <View style={{borderColor: 'black', borderWidth:2, flex: .4, flexDirection: 'row', height: '100%', width: '100%', margin: '2%'}}>
+          <View key={vehicle.id} style={{borderColor: 'black', borderWidth:2, flex: .4, flexDirection: 'row', height: '100%', width: '100%', margin: '2%'}}>
             <View style={{backgroundColor: 'black', borderWidth:2, padding: '5%' }}>
             {CarIcon}
             <Text style={styles.white_text} >{vehicle.make} {vehicle.model}</Text>

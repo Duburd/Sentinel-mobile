@@ -3,7 +3,6 @@ import React from 'react';
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Slider, Platform } from 'react-native';
 import GalleryScreen from './GalleryScreen.js';
 import { Ionicons, MaterialIcons, Foundation, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
-import { RNS3 } from 'react-native-aws3';
 import styles from './cameraStyles.js';
 
 const landmarkSize = 2;
@@ -130,15 +129,17 @@ export default class CameraScreen extends React.Component {
 
   collectPictureSizes = async () => {
     if (this.camera) {
-      const pictureSizes = await this.camera.getAvailablePictureSizesAsync(this.state.ratio);
-      let pictureSizeId = 0;
-      if (Platform.OS === 'ios') {
-        pictureSizeId = pictureSizes.indexOf('High');
-      } else {
+      this.camera.getAvailablePictureSizesAsync(this.state.ratio)
+        .then((pictureSizes)=> {
+        let pictureSizeId = 0;
+        if (Platform.OS === 'ios') {
+          pictureSizeId = pictureSizes.indexOf('High');
+        } else {
         // returned array is sorted in ascending order - default size is the largest one
         pictureSizeId = pictureSizes.length-1;
-      }
-      this.setState({ pictureSizes, pictureSizeId, pictureSize: pictureSizes[pictureSizeId] });
+        }
+        this.setState({ pictureSizes, pictureSizeId, pictureSize: pictureSizes[pictureSizeId] });
+      }).catch((err) => {console.log(err)});
     }
   };
 

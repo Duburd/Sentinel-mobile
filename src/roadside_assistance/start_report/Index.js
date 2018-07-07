@@ -3,7 +3,7 @@ import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 're
 import ProgressBar from './ProgressBar'
 import { Tile } from 'react-native-elements';
 import { RNS3 } from 'react-native-aws3';
-
+import secrets from './../../../../.secrets.json'
 
 
 export default class ReportMain extends React.Component {
@@ -26,11 +26,12 @@ export default class ReportMain extends React.Component {
   }
 
   saveToAws = () => {
-    Alert.alert('this doesn\'t happen');
+    arrayOfAmazonPhotoUri = []
     this.state.selectedPhotos.forEach((uri) => {
       let file_name = '';
       uri.replace(/(\/+\S+\.jpg$)/, (m, p1)=> {
         file_name = p1
+        arrayOfAmazonPhotoUri.push(`https://s3.amazonaws.com/lhl-insurance-buddy/${p1}`)
       });
       const file = {
         // `uri` can also be a file system path (i.e. file://)
@@ -38,22 +39,24 @@ export default class ReportMain extends React.Component {
         name: file_name,
         type: "image/png"
       }
-
+      
       const options = {
         bucket: "lhl-insurance-buddy",
         region: "us-east-1",
-        accessKey: "AKIAIPPVIJ5AKBHMN3UA",
-        secretKey: "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",
+        accessKey: secrets.AWS_PUBLIC_KEY,
+        secretKey: secrets.AWS_SECRET_KEY,
         successActionStatus: 201
       }
-
+      
       RNS3.put(file, options).then(response => {
         if (response.status !== 201)
-          throw new Error("Failed to upload image to S3");
-          console.log(response.body);
-          this.setState({ newPhotos: true })
+        throw new Error("Failed to upload image to S3");
+        console.log(response.body);
+        this.setState({ newPhotos: true })
       });
+      Alert.alert('this doesn\'t happen');
     });
+    return arrayOfAmazonPhotoUri
   }
 
   render() {

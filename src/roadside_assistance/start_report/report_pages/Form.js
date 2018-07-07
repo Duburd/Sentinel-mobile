@@ -68,44 +68,44 @@ export default class Form extends React.Component {
   };
 
   formSubmit = () => {
-    this.props.screnProps.saveToAws()
-    .then((photoUris))
-    const { street, city, region, country, postalCode } = this.state.address[0];
-    const address = `${street} ${city} ${region} ${country} ${postalCode}`
-    const selectedPhotos = this.props.screnProps.selectedPhotos
-    reportObj = {
-      location: address,
-      description: this.state.description,
-      status: "Pending",
-      user_id: this.state.currentDriver,
-      vehicle_id: this.state.currentVehicle,
-    }
-    report = JSON.stringify(reportObj)
-    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/reports', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: report
-    })
-    .then(function (response) {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
+      amazonPhotos = this.props.screenProps.saveToAws()
+      const { street, city, region, country, postalCode } = this.state.address[0];
+      const address = `${street} ${city} ${region} ${country} ${postalCode}`
+      const selectedPhotos = this.props.screenProps.selectedPhotos
+      reportObj = {
+        location: address,
+        description: this.state.description,
+        status: "Pending",
+        user_id: this.state.currentDriver,
+        vehicle_id: this.state.currentVehicle,
+        media: amazonPhotos,
       }
-      const {navigate} = this.props.navigation
-      navigate('Contact')
-      return response.json()
-      .catch(function (err) {
-        console.log(err)
-      });
-    })
+      report = JSON.stringify(reportObj)
+      fetch('https://alluring-shenandoah-49358.herokuapp.com/api/reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: report
+      })
+      .then(function (response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        const {navigate} = this.props.navigation
+        navigate('Contact')
+        return response.json()
+        .catch(function (err) {
+          console.log(err)
+        });
+      })
   }
 
   render() {
-
-    let text = { postalCode: 'Waiting for location...' };
+    let location = { status: 'Waiting for location...' };
     if (this.state.errorMessage) {
-      text = this.state.errorMessage;
+      location = this.state.errorMessage;
     } else if (this.state.address) {
-      text = this.state.address[0];
+      location = this.state.address[0];
+      location.status = 'Location found!'
     }
 
     const { navigate } = this.props.navigation;
@@ -113,8 +113,9 @@ export default class Form extends React.Component {
       <ScrollView height={'100%'} width={'100%'} style={{flex: 1}}>
 
         <Text style={styles.title}>Report</Text>
-        <Text style={styles.subtitle}>{text.postalCode} {text.street}</Text>
-        <Text style={styles.subtitle}> {text.city} {text.region}</Text>
+        <Text style={styles.subtitle}>{location.status}</Text>
+        <Text style={styles.subtitle}>{location.postalCode} {location.street}</Text>
+        <Text style={styles.subtitle}> {location.city} {location.region}</Text>
         <FormLabel>Current Driver</FormLabel>
         <Picker 
           selectedValue = {this.state.currentDriver}
