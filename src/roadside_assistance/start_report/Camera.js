@@ -1,57 +1,10 @@
 import { Constants, Camera, FileSystem, Permissions } from 'expo';
 import React from 'react';
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Slider,
-  Platform
-} from 'react-native';
+import { Alert, StyleSheet, Text, View, TouchableOpacity, Slider, Platform } from 'react-native';
 import GalleryScreen from './GalleryScreen.js';
-import { 
-  Ionicons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
-  Octicons
-} from '@expo/vector-icons';
-
-
+import { Ionicons, MaterialIcons, Foundation, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { RNS3 } from 'react-native-aws3';
-
-const file = {
-  // `uri` can also be a file system path (i.e. file://)
-  uri: "assets-library://asset/asset.PNG?id=655DBE66-8008-459C-9358-914E1FB532DD&ext=PNG",
-  name: "image.png",
-  type: "image/png"
-}
-
-const options = {
-  keyPrefix: "uploads/",
-  bucket: "your-bucket",
-  region: "us-east-1",
-  accessKey: "your-access-key",
-  secretKey: "your-secret-key",
-  successActionStatus: 201
-}
-
-RNS3.put(file, options).then(response => {
-  if (response.status !== 201)
-    throw new Error("Failed to upload image to S3");
-  console.log(response.body);
-  /**
-   * {
-   *   postResponse: {
-   *     bucket: "your-bucket",
-   *     etag : "9f620878e06d28774406017480a59fd4",
-   *     key: "uploads/image.png",
-   *     location: "https://your-bucket.s3.amazonaws.com/uploads%2Fimage.png"
-   *   }
-   * }
-   */
-});
+import styles from './cameraStyles.js';
 
 const landmarkSize = 2;
 
@@ -103,16 +56,16 @@ export default class CameraScreen extends React.Component {
     pictureSizeId: 0,
     showGallery: false,
     tooltips: [
-      'Were going to run you through some tips that will help you through the insurance claim process',
-      'First of all... As difficult as it may seem, it is important that you remain calm.',
-      'Do not argue with other drivers and passengers. Save your story for the police.',
-      'Do not voluntarily assume liability or take responsibility, sign statements regarding fault, or promise to pay for damage at the scene of the accident.',
-      'Stop. If your vehicle is involved in an accident and you don\'t stop, you may be subject to criminal prosecution.',
-      'If no one is injured and total damage to all the vehicles involved appears to be less than $2,000, call a Collision Reporting Centre',
-      'Otherwise. Call the police.',
-      'If safe to do so, let\'s take some pictures to document the situation.'
+      'take a picture of the front of the vehicle.',
+      'take a picture of the back of the vehicle.',
+      'take a picture of the left-side of the vehicle.',
+      'take a picture of the right-side of the vehicle.',
+      'take a picture of the damage close up.',
+      'take a picture of the take any other shots you deem as necessary.',
     ],
     index: 0,
+    photo: 'NO'
+    
   };
   
 
@@ -144,10 +97,6 @@ export default class CameraScreen extends React.Component {
 
   toggleFocus = () => this.setState({ autoFocus: this.state.autoFocus === 'on' ? 'off' : 'on' });
 
-  zoomOut = () => this.setState({ zoom: this.state.zoom - 0.1 < 0 ? 0 : this.state.zoom - 0.1 });
-
-  zoomIn = () => this.setState({ zoom: this.state.zoom + 0.1 > 1 ? 1 : this.state.zoom + 0.1 });
-
   setFocusDepth = depth => this.setState({ depth });
 
   nextSlide = () => {
@@ -162,21 +111,46 @@ export default class CameraScreen extends React.Component {
   }
 
   takePicture = () => {
-    this.nextSlide()
+    //this.nextSlide()
     if (this.camera) {
-      this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
+      this.camera.takePictureAsync().then(photo => {
+
+        Alert.alert(photo.uri)
+        FileSystem.moveAsync({
+          from: photo.uri,
+          to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
+        }).then(()=>{
+        this.setState({ newPhotos: true });
+        })
+      });
     } else {
       Alert.alert(`${FileSystem.documentDirectory}photos/${Date.now()}.jpg`)
     }
   };
 
   onPictureSaved = async photo => {
-    await FileSystem.moveAsync({
-      from: photo.uri,
-      to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
+    Alert.alert('this doesn\'t happen');
+    const file = {
+      // `uri` can also be a file system path (i.e. file://)
+      uri: photo.uri,
+      name: "image.png",
+      type: "image/png"
+    }
+
+    const options = {
+      bucket: "lhl-insurance-buddy",
+      region: "us-east-1",
+      accessKey: "AKIAIPPVIJ5AKBHMN3UA",
+      secretKey: "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",
+      successActionStatus: 201
+    }
+
+    RNS3.put(file, options).then(response => {
+      if (response.status !== 201)
+        throw new Error("Failed to upload image to S3");
+        console.log(response.body);
+        this.setState({ newPhotos: true })
     });
-    Alert.alert(`${FileSystem.documentDirectory}photos/${Date.now()}.jpg`)
-    this.setState({ newPhotos: true });
   }
 
   collectPictureSizes = async () => {
@@ -288,121 +262,3 @@ export default class CameraScreen extends React.Component {
     return <View style={styles.container}>{content}</View>;
   }
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 40,
-    textAlign: 'center',
-    color: 'white',
-    borderRadius: 0,
-    padding: '10%'
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
-  camera: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  topBar: {
-    flex: 0.2,
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: Constants.statusBarHeight / 2,
-  },
-  bottomBar: {
-    paddingBottom: 5,
-    backgroundColor: 'transparent',
-    alignSelf: 'flex-end',
-    justifyContent: 'space-between',
-    flex: 0.12,
-    flexDirection: 'row',
-  },
-  noPermissions: {
-    flex: 1,
-    alignItems:'center',
-    justifyContent: 'center',
-    padding: 10,
-  },
-  gallery: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  toggleButton: {
-    flex: 0.25,
-    height: 40,
-    marginHorizontal: 2,
-    marginBottom: 10,
-    marginTop: 20,
-    padding: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  autoFocusLabel: {
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  bottomButton: {
-    flex: 0.3, 
-    height: 58, 
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  newPhotosDot: {
-    position: 'absolute',
-    top: 0,
-    right: -5,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#4630EB'
-  },
-  options: {
-    position: 'absolute',
-    bottom: 80,
-    left: 30,
-    width: 200,
-    height: 160,
-    backgroundColor: '#000000BA',
-    borderRadius: 4,
-    padding: 10,
-  },
-  detectors: {
-    flex: 0.5,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  pictureQualityLabel: {
-    fontSize: 10,
-    marginVertical: 3, 
-    color: 'white'
-  },
-  pictureSizeContainer: {
-    flex: 0.5,
-    alignItems: 'center',
-    paddingTop: 10,
-  },
-  pictureSizeChooser: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row'
-  },
-  pictureSizeLabel: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  landmark: {
-    width: landmarkSize,
-    height: landmarkSize,
-    position: 'absolute',
-    backgroundColor: 'red',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-});

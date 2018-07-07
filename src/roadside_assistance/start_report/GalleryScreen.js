@@ -44,7 +44,7 @@ export default class GalleryScreen extends React.Component {
       });
 
       await Promise.all(promises);
-      alert('Successfully saved photos to user\'s gallery!');
+      alert('Successfully saved and sent to gallery!');
     } else {
       alert('No photos to save!');
     }
