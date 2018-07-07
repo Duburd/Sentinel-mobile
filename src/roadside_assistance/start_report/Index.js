@@ -3,7 +3,7 @@ import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 're
 import ProgressBar from './ProgressBar'
 import { Tile } from 'react-native-elements';
 import { RNS3 } from 'react-native-aws3';
-import secrets from './../../../../.secrets.json'
+import secrets from './../../../.secrets.json'
 
 
 export default class ReportMain extends React.Component {
