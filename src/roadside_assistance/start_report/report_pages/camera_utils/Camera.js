@@ -114,43 +114,18 @@ export default class CameraScreen extends React.Component {
     //this.nextSlide()
     if (this.camera) {
       this.camera.takePictureAsync().then(photo => {
-
-        Alert.alert(photo.uri)
         FileSystem.moveAsync({
           from: photo.uri,
           to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
         }).then(()=>{
         this.setState({ newPhotos: true });
-        })
+        });
       });
-    } else {
-      Alert.alert(`${FileSystem.documentDirectory}photos/${Date.now()}.jpg`)
-    }
+    };
   };
 
   onPictureSaved = async photo => {
-    Alert.alert('this doesn\'t happen');
-    const file = {
-      // `uri` can also be a file system path (i.e. file://)
-      uri: photo.uri,
-      name: "image.png",
-      type: "image/png"
-    }
 
-    const options = {
-      bucket: "lhl-insurance-buddy",
-      region: "us-east-1",
-      accessKey: "AKIAIPPVIJ5AKBHMN3UA",
-      secretKey: "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",
-      successActionStatus: 201
-    }
-
-    RNS3.put(file, options).then(response => {
-      if (response.status !== 201)
-        throw new Error("Failed to upload image to S3");
-        console.log(response.body);
-        this.setState({ newPhotos: true })
-    });
   }
 
   collectPictureSizes = async () => {
@@ -182,7 +157,7 @@ export default class CameraScreen extends React.Component {
   }
 
   renderGallery() {
-    return <GalleryScreen onPress={this.toggleView.bind(this)} />;
+    return <GalleryScreen addPhoto={this.props.screenProps.addPhoto} onPress={this.toggleView.bind(this)} />;
   }
 
   renderNoPermissions = () => 

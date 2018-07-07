@@ -1,6 +1,5 @@
 import React from 'react';
 import { Animated, Alert, AppRegistry, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
-import ProgressBar from './ProgressBar'
 import { Tile } from 'react-native-elements';
 
 

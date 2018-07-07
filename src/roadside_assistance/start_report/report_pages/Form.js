@@ -1,7 +1,6 @@
 import React from 'react';
 import { Platform, Picker, Animated, Alert, AppRegistry, Button, StyleSheet, ScrollView, Text} from 'react-native';
-import {FormInput, FormLabel} from 'react-native-elements'
-import ProgressBar from './ProgressBar'
+import { FormInput, FormLabel } from 'react-native-elements'
 import { Constants, Location, Permissions } from 'expo';
 import fake_user from './fake_user.json';
 
@@ -69,8 +68,11 @@ export default class Form extends React.Component {
   };
 
   formSubmit = () => {
+    this.props.screnProps.saveToAws()
+    .then((photoUris))
     const { street, city, region, country, postalCode } = this.state.address[0];
     const address = `${street} ${city} ${region} ${country} ${postalCode}`
+    const selectedPhotos = this.props.screnProps.selectedPhotos
     reportObj = {
       location: address,
       description: this.state.description,
@@ -83,19 +85,19 @@ export default class Form extends React.Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: report
-    }).then(function (response) {
+    })
+    .then(function (response) {
       if (response.status >= 400) {
         throw new Error("Bad response from server");
       }
+      const {navigate} = this.props.navigation
+      navigate('Contact')
       return response.json()
-       .then(function (data) {
-        const {navigate} = this.props.navigation
-        navigate('Contact')
-      }).catch(function (err) {
+      .catch(function (err) {
         console.log(err)
-      });;
+      });
     })
-    }
+  }
 
   render() {
 

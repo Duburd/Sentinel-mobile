@@ -1,9 +1,9 @@
 import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
 
-import Camera   from './Camera.js'
-import Form     from './Form.js'
-import Tooltips from './ToolTips1.js'
-import Contact  from './Contact.js'
+import Camera   from './report_pages/camera_utils/Camera.js'
+import Form     from './report_pages/Form.js'
+import Tooltips from './report_pages/ToolTips1.js'
+import Contact  from './report_pages/Contact.js'
 
 import { createBottomTabNavigator, NavigationActions } from 'react-navigation';
 

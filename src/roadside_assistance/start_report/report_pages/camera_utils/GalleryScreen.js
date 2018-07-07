@@ -27,9 +27,11 @@ export default class GalleryScreen extends React.Component {
       selected = selected.filter(item => item !== uri);
     }
     this.setState({ selected });
+    this.props.addPhoto(uri, isSelected);
   };
 
   saveToGallery = async () => {
+
     const photos = this.state.selected;
 
     if (photos.length > 0) {

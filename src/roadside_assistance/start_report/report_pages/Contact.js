@@ -20,7 +20,7 @@ export default class Contact extends React.Component {
   render() {
     return (
       <View style={styles.column}>
-        <Tile imageSrc={ require('./../../../assets/images/customer_service.jpg')}
+        <Tile imageSrc={ require('./../../../../assets/images/customer_service.jpg')}
           height={520} 
           title={'Contact A Representitive'}
           icon={{ name: 'md-contacts', type: 'ionicon', color: 'white', size: 40}} 
