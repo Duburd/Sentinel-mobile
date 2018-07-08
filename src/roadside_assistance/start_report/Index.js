@@ -27,19 +27,16 @@ export default class ReportMain extends React.Component {
 
   saveToAws = () => {
     arrayOfAmazonPhotoUri = []
-    this.state.selectedPhotos.forEach((uri) => {
-      let file_name = '';
-      uri.replace(/(\/+\S+\.jpg$)/, (m, p1)=> {
-        file_name = p1
-        arrayOfAmazonPhotoUri.push(`https://s3.amazonaws.com/lhl-insurance-buddy/${p1}`)
-      });
+    this.state.selectedPhotos.forEach((uri_local) => {
+      file_name = uri_local.replace(/.*\/+(.*$)/, '$1')//replace file path with file name ( file://....../example.jpg = example.jpg )
+      arrayOfAmazonPhotoUri.push(`https://s3.amazonaws.com/lhl-insurance-buddy/${file_name}`)
       const file = {
         // `uri` can also be a file system path (i.e. file://)
-        uri: uri,
+        uri: uri_local,
         name: file_name,
-        type: "image/png"
+        type: "image/png",
       }
-      
+
       const options = {
         bucket: "lhl-insurance-buddy",
         region: "us-east-1",
@@ -47,14 +44,12 @@ export default class ReportMain extends React.Component {
         secretKey: secrets.AWS_SECRET_KEY,
         successActionStatus: 201
       }
-      
+
       RNS3.put(file, options).then(response => {
-        if (response.status !== 201)
-        throw new Error("Failed to upload image to S3");
-        console.log(response.body);
-        this.setState({ newPhotos: true })
+        if (response.status !== 201) {
+          throw new Error("Failed to upload image to S3");
+        }
       });
-      Alert.alert('this doesn\'t happen');
     });
     return arrayOfAmazonPhotoUri
   }
