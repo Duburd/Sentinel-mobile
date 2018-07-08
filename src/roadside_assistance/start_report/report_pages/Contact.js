@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   column: {
     padding: 10,
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
     alignItems: 'center',
     height: '100%',
     width: '100%'
