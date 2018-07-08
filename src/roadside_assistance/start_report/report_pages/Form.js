@@ -1,8 +1,9 @@
 import React from 'react';
-import { Platform, Picker, Animated, Alert, AppRegistry, Button, StyleSheet, ScrollView, Text} from 'react-native';
-import { FormInput, FormLabel } from 'react-native-elements'
+import { Platform, Picker, Animated, Alert, AppRegistry, StyleSheet, ScrollView, Text} from 'react-native';
+import { FormInput, FormLabel, Button} from 'react-native-elements'
 import { Constants, Location, Permissions } from 'expo';
 import fake_user from './fake_user.json';
+import Driver from './Driver.js';
 
 export default class Form extends React.Component {
   constructor(props){
@@ -13,7 +14,7 @@ export default class Form extends React.Component {
       location: null,
       address: null,
       errorMessage: null,
-      additionalDrivers: 0,
+      additionalDrivers: [],
       description: '', 
     }
   }
@@ -79,6 +80,7 @@ export default class Form extends React.Component {
         user_id: this.state.currentDriver,
         vehicle_id: this.state.currentVehicle,
         media: amazonPhotos,
+        additionalDrivers: this.state.additionalDrivers
       }
       report = JSON.stringify(reportObj)
       fetch('https://alluring-shenandoah-49358.herokuapp.com/api/reports', {
@@ -90,13 +92,37 @@ export default class Form extends React.Component {
         if (response.status >= 400) {
           throw new Error("Bad response from server");
         }
-        const {navigate} = this.props.navigation
-        navigate('Contact')
         return response.json()
         .catch(function (err) {
           console.log(err)
         });
       })
+      const {navigate} = this.props.navigation
+      navigate('Contact')
+  }
+
+  setDriverDetails = (i, key, newVal) => {
+    additionalDrivers = this.state.additionalDrivers;
+    additionalDrivers[i][key] = newVal;
+    this.setState({ additionalDrivers });
+  }
+
+  addDriver = () => {
+    additionalDrivers = this.state.additionalDrivers;
+    additionalDrivers.push({
+      policy_number:  '',
+      license_number: '',
+      phone_number:   '',
+      first_name:     '',
+      last_name:      '',
+    });
+    this.setState({ additionalDrivers });
+  }
+
+  removeDriver = (i) => {
+    additionalDrivers = this.state.additionalDrivers;
+    delete additionalDrivers[i];
+    this.setState({ additionalDrivers });
   }
 
   render() {
@@ -105,12 +131,17 @@ export default class Form extends React.Component {
       location = this.state.errorMessage;
     } else if (this.state.address) {
       location = this.state.address[0];
-      location.status = 'Location found!'
+      location.status = '';
     }
+    const { setDriverDetails, removeDriver, state} = this;
+    const { additionalDrivers } = state;
+    const driverForms = this.state.additionalDrivers.map((driver, i)=> (
+      <Driver key={i} details={additionalDrivers[i]} setDriverDetails={setDriverDetails} removeDriver={removeDriver} i={i}/>)
+    );
 
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView height={'100%'} width={'100%'} style={{flex: 1}}>
+      <ScrollView height={'100%'} width={'100%'} style={{flex: 1, margin: 5}}>
 
         <Text style={styles.title}>Report</Text>
         <Text style={styles.subtitle}>{location.status}</Text>
@@ -133,29 +164,24 @@ export default class Form extends React.Component {
         <FormLabel>Description Of Events</FormLabel>
         <FormInput 
           onChangeText={(text) => this.setState({description: text})} 
-          value={this.state.username} 
+          value={this.state.description} 
           editable = {true}
-          maxLength = {40} multiline = {true}
-          numberOfLines = {4}
+          maxLength = {130} multiline = {true}
+          numberOfLines = {5}
           />
-        <Text style={styles.subtitle}>Other Drivers</Text>
-        <Text style={styles.subtitle}>Driver</Text>
-        <FormLabel>First Name</FormLabel>
-        <FormInput onChangeText={(text) => this.setState({username: text})} value={this.state.username}/>
-        <FormLabel>Last Name</FormLabel>
-        <FormInput />
-        <FormLabel>Insurance Policy Number</FormLabel>
-        <FormInput />
-        <FormLabel>Licence Number</FormLabel>
-        <FormInput />
-        <FormLabel>Phone Number</FormLabel>
-        <FormInput />
-        <Button title={'Submit Claim For Review'} onPress={()=> this.formSubmit()}/>
+        <Text style={styles.subtitle}>Other Parties</Text>
+        <Button containerViewStyle={styles.button} title={'Add Another Party'} onPress={()=> this.addDriver()}/>
+        {driverForms}
+        <Button containerViewStyle={styles.button} containerViewStyle={{marginBottom: 250}} title={'Submit Claim For Review'} onPress={()=> this.formSubmit()}/>
       </ScrollView>
     );
   }
 }
 const styles = StyleSheet.create({
+  button: {
+    margin: 10,
+    marginTop: 10,
+  },
   title: {
     fontSize: 40,
     textAlign: 'center',
