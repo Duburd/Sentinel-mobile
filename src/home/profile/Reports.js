@@ -1,33 +1,58 @@
 import React from 'react';
-import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text, ScrollView } from 'react-native';
+import { Icon, Card } from 'react-native-elements';
 
-export default class Reports extends React.Component {
+
+export default class Report extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      reports: null
+    }
   }
-  componentDidMount(){}
+  componentDidMount(){
+    CarIcon = <Icon name="ios-paper-outline" type="ionicon" size={80} />
+    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/3/reports')
+      .then((results) => results.json())
+      .then((reports) => {
+        reports = reports.map((_) => (
+          <Card style={styles.column}>
+            <View style={{ padding: '5%' }}>
+                {CarIcon}
+              <Text style={styles.title}> Case #{_.id} </Text>
+              <Text style={styles.h2}> {_.status} </Text>
+              <Text style={styles.subtitle}>{_.make} {_.model} {_.year}</Text>
+            </View>
+            <View>
+              <Card>
+                <Text style={{fontWeight: 'bold'}}> Damage: </Text>
+                <Text> {_.damage} </Text>
+              </Card>
+              <Card>
+                <Text style={{fontWeight: 'bold'}}> Description: </Text>
+                <Text> {_.description} </Text>
+              </Card>
+              <Text style={{fontWeight: 'bold', marginTop: 15, textAlign: 'center'}}> {_.created_at} </Text>
+            </View>
+          </Card>
+      ))
+        this.setState({reports})
+      });
+  }
   render() {
     return (
-      <Card
-        title='HELLO WORLD'
-        >
-        <Text style={{marginBottom: 10}}>
-          The idea with React Native Elements is more about component structure than actual design.
-        </Text>
-        <Button
-          icon={<Icon name='code' color='#ffffff' />}
-          backgroundColor='#03A9F4'
-          fontFamily='Lato'
-          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-          title='VIEW NOW' />
-      </Card>
+      <ScrollView>
+        <Text style={styles.title}>My Reports</Text>
+        {this.state.reports}
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  nav_icon: {
+    color: "#a6a6a6",
+  },
   column: {
     padding: 10,
     flex: 1,
@@ -37,7 +62,19 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   title: {
-    fontSize: 40,
+    fontSize: 30,
+    textAlign: 'center',
+    color: 'black',
+    borderRadius: 0
+  },
+  h2: {
+    fontSize: 24,
+    textAlign: 'center',
+    color: 'black',
+    borderRadius: 0
+  },
+  subtitle: {
+    fontSize: 20,
     textAlign: 'center',
     color: 'black',
     borderRadius: 0
