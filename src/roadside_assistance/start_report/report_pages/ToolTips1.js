@@ -20,16 +20,18 @@ export default class ToolTips1 extends React.Component {
       index: 0,
     }
   }
-
+  
   nextSlide = () => {
     if (this.state.index > this.state.tooltips.length - 2){
       const {navigate} = this.props.navigation
+      this.setState({index: 0})
       navigate('Camera')
+    } else {
+      index = this.state.index + 1;
+      this.setState({
+        index
+      })
     }
-    index = this.state.index + 1;
-    this.setState({
-      index
-    })
   }
 
   render() {
