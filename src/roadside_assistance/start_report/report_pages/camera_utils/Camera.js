@@ -99,33 +99,27 @@ export default class CameraScreen extends React.Component {
   setFocusDepth = depth => this.setState({ depth });
 
   nextSlide = () => {
-    if (this.state.index > this.state.tooltips.length - 2){
-      const {navigate} = this.props.navigation
-      navigate('Form')
+    if (this.state.index < this.state.tooltips.length - 2)
+      index = this.state.index + 1;
+      this.setState({
+        index
+      })
     }
-    index = this.state.index + 1;
-    this.setState({
-      index
-    })
   }
 
   takePicture = () => {
-    //this.nextSlide()
     if (this.camera) {
       this.camera.takePictureAsync().then(photo => {
         FileSystem.moveAsync({
           from: photo.uri,
           to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
         }).then(()=>{
-        this.setState({ newPhotos: true });
+          this.setState({ newPhotos: true });
         });
       });
     };
+    this.nextSlide()
   };
-
-  onPictureSaved = async photo => {
-
-  }
 
   collectPictureSizes = async () => {
     if (this.camera) {
@@ -234,7 +228,9 @@ export default class CameraScreen extends React.Component {
     const cameraScreenContent = this.state.permissionsGranted
       ? this.renderCamera()
       : this.renderNoPermissions();
-    const content = this.state.showGallery ? this.renderGallery() : cameraScreenContent;
+    const content = this.state.showGallery
+      ? this.renderGallery()
+      : cameraScreenContent;
     return <View style={styles.container}>{content}</View>;
   }
 }
