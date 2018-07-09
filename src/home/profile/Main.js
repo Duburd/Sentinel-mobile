@@ -1,6 +1,6 @@
 import React from 'react';
-import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
-import { Divider, Avatar } from 'react-native-elements';
+import { Animated, Alert, AppRegistry, Button, StyleSheet, ScrollView, Text } from 'react-native';
+import { Divider, Avatar, Card } from 'react-native-elements';
 import fake_user from './fake_user.json';
 import Vehicles from './Vehicles.js';
 export default class Profile extends React.Component {
@@ -17,7 +17,7 @@ export default class Profile extends React.Component {
   }
   render() {
     return (
-      <View style={styles.column}>
+      <ScrollView contentContainerStyle={styles.column}>
         <Text style={styles.title}>{this.state.user[0].first_name} {this.state.user[0].last_name}</Text>
         <Avatar
           style={styles.avatar}
@@ -32,7 +32,7 @@ export default class Profile extends React.Component {
         <Text>policy number: {this.state.user[0].policy_number}</Text>
         <Divider style={{ backgroundColor: 'blue', height: 20, borderStyle: 'solid' }} />
         <Vehicles />
-      </View>
+      </ScrollView>
     );
   }
 }
