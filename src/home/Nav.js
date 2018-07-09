@@ -7,8 +7,8 @@ import { ButtonGroup } from 'react-native-elements'
 import { Constants } from 'expo';
 
 export default class Nav extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       selectedIndex: 0
     }
