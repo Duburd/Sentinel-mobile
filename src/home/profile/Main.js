@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Alert, AppRegistry, Button, StyleSheet, ScrollView, Text } from 'react-native';
+import { Animated, Alert, AppRegistry, Button, StyleSheet, ScrollView, Text, View } from 'react-native';
 import { Divider, Avatar, Card } from 'react-native-elements';
 import fake_user from './fake_user.json';
 import Vehicles from './Vehicles.js';
@@ -17,7 +17,8 @@ export default class Profile extends React.Component {
   }
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.column}>
+      <ScrollView>
+        <View style={styles.column}>
         <Text style={styles.title}>{this.state.user[0].first_name} {this.state.user[0].last_name}</Text>
         <Avatar
           style={styles.avatar}
@@ -30,8 +31,9 @@ export default class Profile extends React.Component {
         <Text>cell: {this.state.user[0].phone_number}</Text>
         <Text>number: {this.state.user[0].license_number}</Text>
         <Text>policy number: {this.state.user[0].policy_number}</Text>
-        <Divider style={{ backgroundColor: 'blue', height: 20, borderStyle: 'solid' }} />
+        <Divider />
         <Vehicles />
+        </View>
       </ScrollView>
     );
   }
@@ -44,7 +46,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     height: '100%',
-    width: '100%'
+    width: '100%',
+    marginBottom: 100
   },
   title: {
     fontSize: 40,
