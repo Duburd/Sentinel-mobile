@@ -20,7 +20,7 @@ export default class Vehicles extends React.Component {
           <Card key={vehicle.id} flexDirection={'row'} wrapperStyle={{width:'100%'}} containerStyle={{ flex: .4, flexDirection: 'row', height: '100%', width: '100%', margin: '2%'}}>
             <View style={{ padding: '5%' }}>
             {CarIcon}
-            <Text>{vehicle.make} {vehicle.model}</Text>
+            <Text style={{textAlign: 'center'}}>{vehicle.make} {vehicle.model}</Text>
             </View>
             <View style={{flex: 1, justifyContent: 'space-around'}}>
             <Text> Year </Text>
