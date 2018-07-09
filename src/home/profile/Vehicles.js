@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text } from 'react-native';
-import { Icon, Avatar } from 'react-native-elements';
+import { Icon, Avatar, Card } from 'react-native-elements';
 import fake_user from './fake_user.json';
 
 
@@ -12,15 +12,15 @@ export default class Vehicles extends React.Component {
     }
   }
   componentDidMount(){
-    CarIcon = <Icon name="ios-car-outline" type="ionicon" size={80} color='white'/>
+    CarIcon = <Icon name="ios-car-outline" type="ionicon" size={80} />
     fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/10/vehicles')
       .then((results) => results.json())
       .then((vehicle_data) => {
         vehicles = vehicle_data.map((vehicle) => (
-          <View key={vehicle.id} style={{borderColor: 'black', borderWidth:2, flex: .4, flexDirection: 'row', height: '100%', width: '100%', margin: '2%'}}>
-            <View style={{backgroundColor: 'black', borderWidth:2, padding: '5%' }}>
+          <Card key={vehicle.id} flexDirection={'row'} wrapperStyle={{width:'100%'}} containerStyle={{ flex: .4, flexDirection: 'row', height: '100%', width: '100%', margin: '2%'}}>
+            <View style={{ padding: '5%' }}>
             {CarIcon}
-            <Text style={styles.white_text} >{vehicle.make} {vehicle.model}</Text>
+            <Text>{vehicle.make} {vehicle.model}</Text>
             </View>
             <View style={{flex: 1, justifyContent: 'space-around'}}>
             <Text> Year </Text>
@@ -32,7 +32,7 @@ export default class Vehicles extends React.Component {
             <Text> {vehicle.plate} </Text>
             <Text> {vehicle.color} </Text>
             </View>
-          </View>
+          </Card>
       ))
         this.setState({vehicles})
       });
