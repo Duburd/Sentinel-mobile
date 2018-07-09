@@ -11,22 +11,16 @@ export default class Form extends React.Component {
     this.state = {
       currentDriver: null,
       currentVehicle: null,
-      location: null,
       address: null,
       errorMessage: null,
       additionalDrivers: [],
       description: '', 
+      damage: '', 
     }
   }
 
   componentWillMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
-      this._getLocationAsync();
-    }
+    this._getLocationAsync();
   }
 
   componentDidMount(){
@@ -36,7 +30,7 @@ export default class Form extends React.Component {
         currentDriver = users_data[0].id
         this.setState({currentDriver})
         users = users_data.map( (_) => (
-          <Picker.Item label= {`${_.first_name} ${_.last_name}`} value={_.id}/>
+          <Picker.Item key={_.id} label= {`${_.first_name} ${_.last_name}`} value={_.id}/>
         ))
         this.setState({users})});
     fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/10/vehicles')
@@ -45,7 +39,7 @@ export default class Form extends React.Component {
         currentVehicle = vehicle_data[0].id
         this.setState({currentVehicle})
         vehicles = vehicle_data.map((_) => (
-            <Picker.Item label= {`${_.make} ${_.model}`} value={_.id}/>
+            <Picker.Item key={_.id} label= {`${_.make} ${_.model}`} value={_.id}/>
       ))
         this.setState({vehicles})
       });
@@ -58,10 +52,7 @@ export default class Form extends React.Component {
         errorMessage: 'Permission to access location was denied',
       });
     }
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({
-      location
-    });
+    let location = await Location.getCurrentPositionAsync();
     let address = await Location.reverseGeocodeAsync(location.coords)
     this.setState({
       address
@@ -69,13 +60,14 @@ export default class Form extends React.Component {
   };
 
   formSubmit = () => {
-      amazonPhotos = this.props.screenProps.saveToAws()
+      amazonPhotos = this.props.screenProps.saveToAws() 
       const { street, city, region, country, postalCode } = this.state.address[0];
       const address = `${street} ${city} ${region} ${country} ${postalCode}`
       const selectedPhotos = this.props.screenProps.selectedPhotos
       reportObj = {
         location: address,
         description: this.state.description,
+        damage: this.state.damage,
         status: "Pending",
         user_id: this.state.currentDriver,
         vehicle_id: this.state.currentVehicle,
@@ -148,7 +140,7 @@ export default class Form extends React.Component {
         <Text style={styles.subtitle}>{location.postalCode} {location.street}</Text>
         <Text style={styles.subtitle}> {location.city} {location.region}</Text>
         <FormLabel>Current Driver</FormLabel>
-        <Picker 
+        <Picker
           selectedValue = {this.state.currentDriver}
           style={{ height: 50, width: "100%" }}
           onValueChange={(itemValue, itemIndex) => this.setState({currentDriver: itemValue})}>
@@ -169,10 +161,22 @@ export default class Form extends React.Component {
           maxLength = {130} multiline = {true}
           numberOfLines = {5}
           />
+        <FormInput 
+          onChangeText={(text) => this.setState({damage: text})} 
+          value={this.state.damage} 
+          editable = {true}
+          maxLength = {130} multiline = {true}
+          numberOfLines = {5}
+          />        
         <Text style={styles.subtitle}>Other Parties</Text>
         <Button containerViewStyle={styles.button} title={'Add Another Party'} onPress={()=> this.addDriver()}/>
         {driverForms}
-        <Button containerViewStyle={styles.button} containerViewStyle={{marginBottom: 250}} title={'Submit Claim For Review'} onPress={()=> this.formSubmit()}/>
+        <Button 
+          containerViewStyle={styles.button}
+          containerViewStyle={{marginBottom: 250}}
+          title={'Submit Claim For Review'}
+          onPress={()=> this.formSubmit()}
+        />
       </ScrollView>
     );
   }
