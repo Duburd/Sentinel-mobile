@@ -155,7 +155,7 @@ export default class Form extends React.Component {
         </Picker>
         <FormLabel>Description Of Events</FormLabel>
         <FormInput 
-          onChangeText={(text) => this.setState({description: text})} 
+          onChangeText={(text) => this.setState({description: text})}
           value={this.state.description} 
           editable = {true}
           maxLength = {130} multiline = {true}
