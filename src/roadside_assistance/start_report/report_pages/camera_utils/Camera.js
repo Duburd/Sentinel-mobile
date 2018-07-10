@@ -99,7 +99,7 @@ export default class CameraScreen extends React.Component {
   setFocusDepth = depth => this.setState({ depth });
 
   nextSlide = () => {
-    if (this.state.index < this.state.tooltips.length - 2)
+    if (this.state.index < this.state.tooltips.length - 2){
       index = this.state.index + 1;
       this.setState({
         index
