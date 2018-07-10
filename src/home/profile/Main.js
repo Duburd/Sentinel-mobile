@@ -1,38 +1,31 @@
 import React from 'react';
 import { Animated, Alert, AppRegistry, Button, StyleSheet, ScrollView, Text, View } from 'react-native';
 import { Divider, Avatar, Card } from 'react-native-elements';
-import fake_user from './fake_user.json';
 import Vehicles from './Vehicles.js';
+
 export default class Profile extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      user: [fake_user]
-    }
   }
-  componentDidMount(){
-    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/3')
-      .then((results)=> results.json())
-      .then((user) => {this.setState({user})});
-  }
+  componentDidMount(){}
   render() {
     return (
       <ScrollView>
         <View style={styles.column}>
-        <Text style={styles.title}>{this.state.user[0].first_name} {this.state.user[0].last_name}</Text>
-        <Avatar
-          style={styles.avatar}
-          xlarge
-          rounded
-          source={{uri: this.state.user[0].uri}}
-          onPress={() => console.log("Works!")}
-          activeOpacity={0.7}
-        />
-        <Text>cell: {this.state.user[0].phone_number}</Text>
-        <Text>number: {this.state.user[0].license_number}</Text>
-        <Text>policy number: {this.state.user[0].policy_number}</Text>
-        <Divider />
-        <Vehicles />
+          <Text style={styles.title}>{this.props.user[0].first_name} {this.props.user[0].last_name}</Text>
+          <Avatar
+            style={styles.avatar}
+            xlarge
+            rounded
+            source={{uri: this.props.user[0].uri}}
+            onPress={() => console.log("Works!")}
+            activeOpacity={0.7}
+          />
+          <Text>cell: {this.props.user[0].phone_number}</Text>
+          <Text>license number: {this.props.user[0].license_number}</Text>
+          <Text>policy number: {this.props.user[0].policy_number}</Text>
+          <Divider style={{height: 4, backgroundColor: 'lightblue'}}/>
+          <Vehicles user={this.props.user}/>
         </View>
       </ScrollView>
     );
