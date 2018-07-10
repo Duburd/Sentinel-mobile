@@ -6,25 +6,33 @@ import Profile from './profile/Main'
 import Reports from './profile/Reports'
 import Vehicles from './profile/Vehicles'
 import Login from './Login'
+import fake_user from './profile/fake_user.json';
+
 
 export default class HomeIndex extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      tab: <Profile/>,
+      tab: null,
       isLoggedIn: false,
       policyNum: '',
       pwd: '',
-      logErr: null
+      logErr: null,
+      user: fake_user
     }
   }
-
+  componentDidMount(){
+  }
   currentTab = (tabIndex) => {
-    const tab = [<Profile/>,<Reports/>][tabIndex]
+    const tab = [
+    <Profile user={this.state.user}/>,
+    <Reports user={this.state.user}/>]
+    [tabIndex]
     this.setState({tab})
   }
 
   tryLogin = () => {
+    this.setState({logErr: null})
     loginObj = {
       policyNum: this.state.policyNum,
       pwd: this.state.pwd,
@@ -35,16 +43,16 @@ export default class HomeIndex extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: cred,
     })
-    .then(function (response) {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-      return response.json()
-      .catch(function (logErr) {
-        console.log(logErr)
-      });
-    })
-    this.fadeModal()
+    .then((results)=> results.json())
+    .then((response) => {
+      if(response.user === null){
+          this.setState({logErr: response.message})
+        } else {
+          this.setState({user: response.user})
+          this.currentTab(0)          
+          this.fadeModal()
+        }
+      })
   }
 
   fadeModal() {
@@ -55,10 +63,10 @@ export default class HomeIndex extends React.Component {
   onPwdChange    = (text) => this.setState({pwd:       text})
 
   render() {
-    const { pwd, policyNum, isLoggedIn , logErr} = this.state;
+    const { pwd, policyNum, isLoggedIn , logErr, user} = this.state;
     return (
       <View height={'100%'} width={'100%'}>
-        <FadeInView navigation={this.props.navigation}/>
+        <FadeInView navigation={this.props.navigation} user={user}/>
         <Login 
           tryLogin={this.tryLogin}  
           login={this.login}
