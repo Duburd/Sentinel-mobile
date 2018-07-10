@@ -14,7 +14,7 @@ const navigateAction = NavigationActions.navigate({
 });
 
 const App = createStackNavigator({
-  Home:    { 
+  Home:    {
     screen: HomeIndex,
     navigationOptions: ({ navigation }) => ({
       header: null,
