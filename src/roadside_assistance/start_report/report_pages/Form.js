@@ -60,37 +60,39 @@ export default class Form extends React.Component {
   };
 
   formSubmit = () => {
-      amazonPhotos = this.props.screenProps.saveToAws() 
-      const { street, city, region, country, postalCode } = this.state.address[0];
-      const address = `${street} ${city} ${region} ${country} ${postalCode}`
-      const selectedPhotos = this.props.screenProps.selectedPhotos
-      reportObj = {
-        location: address,
-        description: this.state.description,
-        damage: this.state.damage,
-        status: "Pending",
-        user_id: this.state.currentDriver,
-        vehicle_id: this.state.currentVehicle,
-        media: amazonPhotos,
-        additionalDrivers: this.state.additionalDrivers
+    amazonPhotos = this.props.screenProps.saveToAws() 
+    const { street, city, region, country, postalCode } = this.state.address[0];
+    const address = `${street} ${city} ${region} ${country} ${postalCode}`
+    const selectedPhotos = this.props.screenProps.selectedPhotos
+    reportObj = {
+      location: address,
+      description: this.state.description,
+      damage: this.state.damage,
+      status: "Pending",
+      user_id: this.state.currentDriver,
+      vehicle_id: this.state.currentVehicle,
+      media: amazonPhotos,
+      additionalDrivers: this.state.additionalDrivers
+    }
+    report = JSON.stringify(reportObj)
+    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/reports', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: report
+    })
+    .then(function (response) {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
       }
-      report = JSON.stringify(reportObj)
-      fetch('https://alluring-shenandoah-49358.herokuapp.com/api/reports', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: report
+      return response.json()
       })
-      .then(function (response) {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        return response.json()
-        .catch(function (err) {
-          console.log(err)
-        });
+      .then((data)=>{
+        this.props.screenProps.setReportId(data[0].report_id)
       })
-      const {navigate} = this.props.navigation
-      navigate('Contact')
+      .then(()=>{
+        const {navigate} = this.props.navigation
+        navigate('Contact')
+      })
   }
 
   setDriverDetails = (i, key, newVal) => {

@@ -42,7 +42,8 @@ export default class ReportMain extends React.Component {
         region: "us-east-1",
         accessKey: secrets.AWS_PUBLIC_KEY,
         secretKey: secrets.AWS_SECRET_KEY,
-        successActionStatus: 201
+        successActionStatus: 201,
+        report_id: null,
       }
 
       RNS3.put(file, options).then(response => {
@@ -54,12 +55,23 @@ export default class ReportMain extends React.Component {
     return arrayOfAmazonPhotoUri
   }
 
+  handleFormId = (i) => {
+    return this.props.screenProps.setReportId(i)
+  }
+
   render() {
+    const {user, latest_report} = this.props.screenProps
     const {addPhoto, saveToAws} = this;
     const { navigate } = this.props.navigation;
     return (
       <View height={'100%'} width={'100%'}>
-         <ProgressBar screenProps={{ addPhoto: addPhoto, saveToAws: saveToAws, user: this.props.screenProps.user }}/>
+         <ProgressBar screenProps={{ 
+           addPhoto: addPhoto,
+           saveToAws: saveToAws,
+           user: user,
+           latest_report: latest_report,
+           setReportId: this.handleFormId, 
+        }}/>
       </View>
     );
   }

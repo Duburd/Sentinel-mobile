@@ -37,12 +37,12 @@ export default class App extends React.Component {
     super();
     this.state = {
       isLoggedIn: false,
-      policyNum: '',
-      pwd: '',
+      policyNum: '12345',
+      pwd: 'Abcd1234',
       logErr: null,
       user: fake_user,
       tab: null,
-
+      latest_report: 0,
     };
   }
 
@@ -68,6 +68,14 @@ export default class App extends React.Component {
           this.fadeModal()
         }
       })
+      this.setReportId = this.setReportId.bind(this)
+  }
+
+  setReportId(i){
+    this.setState({
+      latest_report: i,
+    })
+    
   }
 
   fadeModal() {
@@ -88,7 +96,9 @@ export default class App extends React.Component {
   render() {
     const { pwd, policyNum, isLoggedIn , logErr, user} = this.state;
     return <Stack 
-    screenProps={{ 
+    screenProps={{
+      setReportId   :this.setReportId,
+      latest_report :this.state.latest_report,
       user          :this.state.user,
       tab           :this.state.tab,
       currentTab    :this.currentTab,

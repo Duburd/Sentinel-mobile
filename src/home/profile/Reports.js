@@ -12,12 +12,20 @@ export default class Report extends React.Component {
   }
   componentDidMount(){
     CarIcon = <Icon name="ios-paper-outline" type="ionicon" size={80} />
-    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/3/reports')
+    fetch(`https://alluring-shenandoah-49358.herokuapp.com/api/users/${this.props.user[0].id}/reports`)
       .then((results) => results.json())
       .then((reports) => {
         reports = reports.map((_) => (
-          <Card key={_.id} style={styles.column}>
-            <View style={{ padding: '5%' }}>
+          <Card 
+          wrapperStyle={{ flex: 1, width:'100%'}}
+          containerStyle={{
+            flex: 1,
+            height: '100%',
+            width: '100%',
+            margin: '2%'
+          }}
+          key={_.id}>
+            <View>
                 {CarIcon}
               <Text style={styles.title}> Case #{_.id} </Text>
               <Text style={styles.h2}> {_.status} </Text>
@@ -42,8 +50,10 @@ export default class Report extends React.Component {
   render() {
     return (
       <ScrollView>
-        <Text style={styles.title}>My Reports</Text>
-        {this.state.reports}
+        <View style={styles.column}>
+          <Text style={styles.title}>My Reports</Text>
+          {this.state.reports}
+        </View>
       </ScrollView>
     );
   }
@@ -59,7 +69,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     height: '100%',
-    width: '100%'
+    width: '100%',
+
+    marginBottom: 100
   },
   title: {
     fontSize: 30,

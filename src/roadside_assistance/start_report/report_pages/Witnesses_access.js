@@ -10,7 +10,6 @@ export default class Contact extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      text: `https://alluring-shenandoah-49358.herokuapp.com/reports/${id}/witnesses`
     }
   }
   componentDidMount(){
@@ -19,10 +18,10 @@ export default class Contact extends React.Component {
     return (
       <View style={styles.column}>
         <QRCode
-          value={this.state.text}
-          size={200}
+          value={`https://alluring-shenandoah-49358.herokuapp.com/witness?reportId=${this.props.screenProps.latest_report}`}
+          size={400}
           bgColor='black'
-          fgColor='white'/>
+          fgColor='whitesmoke'/>
       </View>
     );
   }
