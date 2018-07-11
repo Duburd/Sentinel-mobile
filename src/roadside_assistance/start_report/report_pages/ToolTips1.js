@@ -42,6 +42,9 @@ export default class ToolTips1 extends React.Component {
           <Text style={styles.title}>
             {this.state.tooltips[this.state.index]}
           </Text>
+          <Text style={styles.title}>
+            Tap to Continue
+          </Text>
         </TouchableOpacity>
       </View>
     );

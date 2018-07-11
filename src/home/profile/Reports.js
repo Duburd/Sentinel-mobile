@@ -1,7 +1,7 @@
 import React from 'react';
 import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text, ScrollView } from 'react-native';
 import { Icon, Card } from 'react-native-elements';
-
+import moment from 'moment';
 
 export default class Report extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export default class Report extends React.Component {
       .then((results) => results.json())
       .then((reports) => {
         reports = reports.map((_) => (
-          <Card style={styles.column}>
+          <Card key={_.id} style={styles.column}>
             <View style={{ padding: '5%' }}>
                 {CarIcon}
               <Text style={styles.title}> Case #{_.id} </Text>
@@ -32,7 +32,7 @@ export default class Report extends React.Component {
                 <Text style={{fontWeight: 'bold'}}> Description: </Text>
                 <Text> {_.description} </Text>
               </Card>
-              <Text style={{fontWeight: 'bold', marginTop: 15, textAlign: 'center'}}> {_.created_at} </Text>
+              <Text style={{fontWeight: 'bold', marginTop: 15, textAlign: 'center'}}> {moment(_.created_at).format("MMMM Do YYYY, h:mm a")} </Text>
             </View>
           </Card>
       ))

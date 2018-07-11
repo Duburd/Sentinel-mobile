@@ -13,14 +13,24 @@ export default class Vehicles extends React.Component {
   }
   componentDidMount(){
     CarIcon = <Icon name="ios-car-outline" type="ionicon" size={80} />
-    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/10/vehicles')
+    fetch(`https://alluring-shenandoah-49358.herokuapp.com/api/users/${this.props.user[0].id}/vehicles`)
       .then((results) => results.json())
       .then((vehicle_data) => {
-        vehicles = vehicle_data.map((vehicle) => (
-          <Card key={vehicle.id} flexDirection={'row'} wrapperStyle={{width:'100%'}} containerStyle={{ flex: .4, flexDirection: 'row', height: '100%', width: '100%', margin: '2%'}}>
+        vehicles = vehicle_data.map((_) => (
+          <Card
+          key={_.id}
+          flexDirection={'row'}
+          wrapperStyle={{width:'100%'}}
+          containerStyle={{
+            flex: .4,
+            flexDirection: 'row',
+            height: '100%',
+            width: '100%',
+            margin: '2%'
+          }}>
             <View style={{ padding: '5%' }}>
             {CarIcon}
-            <Text style={{textAlign: 'center'}}>{vehicle.make} {vehicle.model}</Text>
+            <Text style={{textAlign: 'center'}}>{_.make} {_.model}</Text>
             </View>
             <View style={{flex: 1, justifyContent: 'space-around'}}>
             <Text> Year </Text>
@@ -28,9 +38,9 @@ export default class Vehicles extends React.Component {
             <Text> color </Text>
             </View>
             <View style={{flex: 1, justifyContent: 'space-around'}}>
-            <Text> {vehicle.year}  </Text>
-            <Text> {vehicle.plate} </Text>
-            <Text> {vehicle.color} </Text>
+            <Text> {_.year}  </Text>
+            <Text> {_.plate} </Text>
+            <Text> {_.color} </Text>
             </View>
           </Card>
       ))

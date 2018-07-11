@@ -59,7 +59,7 @@ export default class ReportMain extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View height={'100%'} width={'100%'}>
-         <ProgressBar screenProps={{ addPhoto, saveToAws }}/>
+         <ProgressBar screenProps={{ addPhoto: addPhoto, saveToAws: saveToAws, user: this.props.screenProps.user }}/>
       </View>
     );
   }

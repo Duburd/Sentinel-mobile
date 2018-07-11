@@ -34,12 +34,13 @@ export default class FadeInView extends React.Component {
         // Bind opacity to animated value
         }}
       >
-      <Tile imageSrc={ require('./../../assets/images/roadside.jpg')}    
-      height={200} 
-      title={'Tap For Roadside Assistance'}
-      featured
-      onPress={()=> navigate('options')}
-/>
+      <Tile 
+        imageSrc={ require('./../../assets/images/roadside.jpg')}    
+        height={200}
+        title={'Tap For Roadside Assistance'}
+        featured
+        onPress={()=> navigate('options')}
+      />
         {this.props.children}
       </Animated.View>
     );

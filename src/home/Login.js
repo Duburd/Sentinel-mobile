@@ -1,56 +1,46 @@
 import React from 'react';
-import { Platform, Picker, Animated, Alert, AppRegistry, StyleSheet, ScrollView, Text, Modal} from 'react-native';
-import { FormInput, FormLabel, Button} from 'react-native-elements'
+import { Platform, Picker, Animated, Alert, AppRegistry, StyleSheet, ScrollView, Text, Modal, View, Image} from 'react-native';
+import { FormInput, FormLabel, Button, FormValidationMessage, Tile} from 'react-native-elements'
 
 export default class Form extends React.Component {
   constructor(props){
     super(props)
-    this.state = {
-      usr: '',
-      pwd: '',
-    }
-  }
-
-  formSubmit = () => {
-      reportObj = {
-        usr: '',
-        pwd: '',
-        }
-      report = JSON.stringify(reportObj)
-      fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: report
-      })
-      .then(function (response) {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        return response.json()
-        .catch(function (err) {
-          console.log(err)
-        });
-      })
   }
 
   render() {
     return (
-      <Modal height={'100%'} width={'100%'} style={{flex: 1, margin: 5}}>
-
-        <Text style={styles.title}>Login</Text>
-        <FormLabel>Description Of Events</FormLabel>
+      <Modal
+      animationType="fade"
+      transparent={false}
+      visible={!this.props.fromIndex.isLoggedIn}
+      onRequestClose={() => {
+        alert('You are now logged in.');
+      }}>
+        <View style={{flex:1, justifyContent: 'center'}}>
+        <Tile 
+        imageSrc={{uri:'https://steemitimages.com/0x0/https://plotagraph.s3.amazonaws.com/shared/589e4c6ed1e4e81500537144.gif'}}    
+        height={200}
+        title={'Sentinel Login'}
+        titleStyle={{fontSize: 50}}
+        featured
+        onPress={()=> ''}
+      />
+        <Text style={styles.login}></Text>
+        <FormValidationMessage labelStyle={{textAlign: 'center'}}>{this.props.fromIndex.logErr}</FormValidationMessage>
+        <FormLabel>Policy Number</FormLabel>
         <FormInput 
-          onChangeText={(text) => this.setState({usr: text})}
-          value={this.state.usr} 
+          onChangeText={(text)=>this.props.onPolicyChange(text)}
+          value={this.props.fromIndex.policyNum} 
           editable = {true}
           />
+        <FormLabel>Password</FormLabel>
         <FormInput 
-          onChangeText={(text) => this.setState({pwd: text})} 
-          value={this.state.pwd} 
+          onChangeText={(text)=>this.props.onPwdChange(text)} 
+          value={this.props.fromIndex.pwd} 
           editable = {true}
           />
-        <Text style={styles.subtitle}>Other Parties</Text>
-        <Button containerViewStyle={styles.button} title={'Submit'} onPress={()=> this.addDriver()}/>
+        <Button containerViewStyle={styles.button} title={'Submit'} onPress={()=> this.props.tryLogin()}/>
+        </View>
       </Modal>
     );
   }
@@ -61,6 +51,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   title: {
+    fontSize: 40,
+    textAlign: 'center',
+    color: 'black',
+    borderRadius: 0,
+    fontWeight: 'bold',
+    color: 'lightblue'
+  },
+  login: {
     fontSize: 40,
     textAlign: 'center',
     color: 'black',

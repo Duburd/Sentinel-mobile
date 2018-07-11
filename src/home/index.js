@@ -2,36 +2,33 @@ import React from 'react';
 import { Animated, Alert, AppRegistry, Button, StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import FadeInView from './FadeInView'
 import Nav from './Nav'
-import Profile from './profile/Main'
-import Reports from './profile/Reports'
-import Vehicles from './profile/Vehicles'
-import Login from './profile/Login'
+import Login from './Login'
+
 
 export default class HomeIndex extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      tab: <Profile/>,
-      modalVisible: true,
     }
   }
+  componentDidMount(){}
 
-  currentTab = (tabIndex) => {
-    const tab = [<Profile/>,<Reports/>][tabIndex]
-    this.setState({tab})
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
 
   render() {
+    const { pwd, policyNum, isLoggedIn , logErr, user} = this.props.screenProps.fromIndex;
+    const { onPolicyChange, tryLogin, login , onPwdChange, tab, currentTab} = this.props.screenProps;
     return (
       <View height={'100%'} width={'100%'}>
-        <FadeInView navigation={this.props.navigation}/>
-          <Login />
-        {this.state.tab}
-        <Nav currentTab={this.currentTab}/>
+        <FadeInView navigation={this.props.navigation} user={user}/>
+        <Login 
+          tryLogin={tryLogin}
+          login={login}
+          fromIndex={{pwd, policyNum, isLoggedIn, logErr}}
+          onPolicyChange={onPolicyChange}
+          onPwdChange={onPwdChange}
+        />
+        {tab}
+        <Nav currentTab={currentTab} />
       </View>
     );
   }

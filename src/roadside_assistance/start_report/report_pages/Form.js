@@ -24,7 +24,7 @@ export default class Form extends React.Component {
   }
 
   componentDidMount(){
-    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/3')
+    fetch(`https://alluring-shenandoah-49358.herokuapp.com/api/users/${this.props.screenProps.user[0].id}`)
       .then((results)=> results.json())
       .then((users_data) => {
         currentDriver = users_data[0].id
@@ -33,7 +33,7 @@ export default class Form extends React.Component {
           <Picker.Item key={_.id} label= {`${_.first_name} ${_.last_name}`} value={_.id}/>
         ))
         this.setState({users})});
-    fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/10/vehicles')
+    fetch(`https://alluring-shenandoah-49358.herokuapp.com/api/users/${this.props.screenProps.user[0].id}/vehicles`)
       .then((results) => results.json())
       .then((vehicle_data) => {
         currentVehicle = vehicle_data[0].id
