@@ -48,11 +48,11 @@ export default class App extends React.Component {
 
   tryLogin = () => {
     this.setState({logErr: null})
-    loginObj = {
+    const loginObj = {
       policyNum: this.state.policyNum,
       pwd: this.state.pwd,
     }
-    cred = JSON.stringify(loginObj)
+    const cred = JSON.stringify(loginObj)
     fetch('https://alluring-shenandoah-49358.herokuapp.com/api/users/session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
