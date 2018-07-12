@@ -163,6 +163,7 @@ export default class Form extends React.Component {
           maxLength = {130} multiline = {true}
           numberOfLines = {5}
           />
+        <FormLabel>Description Of Damage To Vehicle</FormLabel>
         <FormInput 
           onChangeText={(text) => this.setState({damage: text})} 
           value={this.state.damage} 

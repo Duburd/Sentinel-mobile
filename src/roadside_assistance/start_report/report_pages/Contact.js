@@ -21,9 +21,10 @@ export default class Contact extends React.Component {
     return (
       <View style={styles.column}>
         <Tile imageSrc={ require('./../../../../assets/images/customer_service.jpg')}
-          height={520} 
+          height={520}
           title={'Contact A Representitive'}
-          icon={{ name: 'md-contacts', type: 'ionicon', color: 'white', size: 40}} 
+          caption={'tap to place call...'}
+          icon={{ name: 'md-contacts', type: 'ionicon', color: 'white', size: 40}}
           featured
           onPress={()=> Linking.openURL('tel://7788555726')}
         />

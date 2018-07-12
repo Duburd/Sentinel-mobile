@@ -30,7 +30,7 @@ export default class Form extends React.Component {
         <FormLabel>Policy Number</FormLabel>
         <FormInput 
           onChangeText={(text)=>this.props.onPolicyChange(text)}
-          value={this.props.fromIndex.policyNum} 
+          value={this.props.fromIndex.email} 
           editable = {true}
           />
         <FormLabel>Password</FormLabel>

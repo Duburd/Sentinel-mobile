@@ -15,7 +15,7 @@ export default class HomeIndex extends React.Component {
 
 
   render() {
-    const { pwd, policyNum, isLoggedIn , logErr, user} = this.props.screenProps.fromIndex;
+    const { pwd, email, isLoggedIn , logErr, user} = this.props.screenProps.fromIndex;
     const { onPolicyChange, tryLogin, login , onPwdChange, tab, currentTab} = this.props.screenProps;
     return (
       <View height={'100%'} width={'100%'}>
@@ -23,7 +23,7 @@ export default class HomeIndex extends React.Component {
         <Login 
           tryLogin={tryLogin}
           login={login}
-          fromIndex={{pwd, policyNum, isLoggedIn, logErr}}
+          fromIndex={{pwd, email, isLoggedIn, logErr}}
           onPolicyChange={onPolicyChange}
           onPwdChange={onPwdChange}
         />

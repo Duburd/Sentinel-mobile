@@ -17,6 +17,9 @@ export default class Contact extends React.Component {
   render() {
     return (
       <View style={styles.column}>
+      <Text style={styles.title}>
+        Have witnesses of the event scan this to give their statement
+      </Text>
         <QRCode
           value={`https://alluring-shenandoah-49358.herokuapp.com/witness?reportId=${this.props.screenProps.latest_report}`}
           size={400}

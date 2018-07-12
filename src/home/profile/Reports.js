@@ -15,7 +15,7 @@ export default class Report extends React.Component {
     fetch(`https://alluring-shenandoah-49358.herokuapp.com/api/users/${this.props.user[0].id}/reports`)
       .then((results) => results.json())
       .then((reports) => {
-        reports = reports.map((_) => (
+        reports = reports.reverse().map((_) => (
           <Card 
           wrapperStyle={{ flex: 1, width:'100%'}}
           containerStyle={{

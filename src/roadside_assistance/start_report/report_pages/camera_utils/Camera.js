@@ -60,7 +60,7 @@ export default class CameraScreen extends React.Component {
       'take a picture of the left-side of the vehicle.',
       'take a picture of the right-side of the vehicle.',
       'take a picture of the damage close up.',
-      'take a picture of the take any other shots you deem as necessary.',
+      'add the photos you want in the gallery page and continue to the form.',
     ],
     index: 0,
     photo: 'NO'
@@ -99,7 +99,7 @@ export default class CameraScreen extends React.Component {
   setFocusDepth = depth => this.setState({ depth });
 
   nextSlide = () => {
-    if (this.state.index < this.state.tooltips.length - 2){
+    if (this.state.index < this.state.tooltips.length - 1){
       index = this.state.index + 1;
       this.setState({
         index

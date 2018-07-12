@@ -8,9 +8,9 @@ import Camera     from './src/roadside_assistance/start_report/report_pages/came
 import Form       from './src/roadside_assistance/start_report/report_pages/Form.js'
 import Contact    from './src/roadside_assistance/start_report/report_pages/Contact.js'
 import fake_user  from './src/home/profile/fake_user.json';
-import Profile from './src/home/profile/Main'
-import Reports from './src/home/profile/Reports'
-import Vehicles from './src/home/profile/Vehicles'
+import Profile    from './src/home/profile/Main'
+import Reports    from './src/home/profile/Reports'
+import Vehicles   from './src/home/profile/Vehicles'
 
 const navigateAction = NavigationActions.navigate({
   routeName: 'options',
@@ -37,7 +37,7 @@ export default class App extends React.Component {
     super();
     this.state = {
       isLoggedIn: false,
-      policyNum: '12345',
+      email: 'matt@gmail.com',
       pwd: 'Abcd1234',
       logErr: null,
       user: fake_user,
@@ -49,7 +49,7 @@ export default class App extends React.Component {
   tryLogin = () => {
     this.setState({logErr: null})
     const loginObj = {
-      policyNum: this.state.policyNum,
+      email: this.state.email,
       pwd: this.state.pwd,
     }
     const cred = JSON.stringify(loginObj)
@@ -90,11 +90,11 @@ export default class App extends React.Component {
     this.setState({tab})
   }
 
-  onPolicyChange = (text) => this.setState({policyNum: text})
-  onPwdChange    = (text) => this.setState({pwd:       text})
+  onPolicyChange = (text) => this.setState({email: text})
+  onPwdChange    = (text) => this.setState({pwd:   text})
 
   render() {
-    const { pwd, policyNum, isLoggedIn , logErr, user} = this.state;
+    const { pwd, email, isLoggedIn , logErr, user} = this.state;
     return <Stack 
     screenProps={{
       setReportId   :this.setReportId,
@@ -104,7 +104,7 @@ export default class App extends React.Component {
       currentTab    :this.currentTab,
       tryLogin      :this.tryLogin,
       login         :this.login,
-      fromIndex     :{pwd, policyNum, isLoggedIn, logErr},
+      fromIndex     :{pwd, email, isLoggedIn, logErr},
       onPolicyChange:this.onPolicyChange,
       onPwdChange   :this.onPwdChange,
     }} /> 

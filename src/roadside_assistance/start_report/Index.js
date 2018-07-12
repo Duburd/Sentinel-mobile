@@ -22,7 +22,6 @@ export default class ReportMain extends React.Component {
       selectedPhotos = selectedPhotos.filter(item => item !== uri);
     }
     this.setState({ selectedPhotos });
-    Alert.alert(this.state.selectedPhotos.length.toString())
   }
 
   saveToAws = () => {
