@@ -14,8 +14,8 @@ export default class Form extends React.Component {
       address: null,
       errorMessage: null,
       additionalDrivers: [],
-      description: '', 
-      damage: '', 
+      description: 'going through intersection then bam!!!', 
+      damage: 'Rear fender scratched, and rear window broken.', 
     }
   }
 
@@ -91,7 +91,7 @@ export default class Form extends React.Component {
       })
       .then(()=>{
         const {navigate} = this.props.navigation
-        navigate('Contact')
+        navigate('Witness')
       })
   }
 
