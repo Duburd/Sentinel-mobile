@@ -2,9 +2,9 @@
 
 ## Sentinel
 
-Sentinel is a full stack web app for insurance companies to manage and edit reports submitted by clients. 
+Sentinel Mobile is a React native app for clients to manage and submit auto claims. 
 
-Sentinel was built using React and React Native. This repo is the `React` part of the project. To access the `React.js` part of the project, see here: https://github.com/Matt-Greff/Sentinel
+Sentinel was built using React and React Native. This repo is the `React Native` part of the project. To access the `React.js` part of the project, see here: https://github.com/Matt-Greff/Sentinel
 
 ## Screenshots:
 
@@ -19,7 +19,7 @@ Sentinel was built using React and React Native. This repo is the `React` part o
 1. Clone this repo.
 2. run `yarn install` from the project's root directory in terminal to install dependencies. 
 2. input `yarn start` in terminal to start server.
-3. scan QR code in Expo app.
+3. scan the QR code in your Expo app.
 
 ---
 ## dependencies
