@@ -8,23 +8,11 @@ Sentinel was built using React and React Native. This repo is the `React` part o
 
 ## Screenshots:
 
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195228.png =250x)
-
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195306.png =250x)
+![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195228.png?raw=true)
 
 ![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195310.png?raw=true=250x)
 
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195313.png?raw=true=250x)
-
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195318.png?raw=true=250x)
-
 ![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195518.png?raw=true=250x)
-
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195541.png?raw=true=250x)
-
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195554.png?raw=true=250x)
-
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195601.png?raw=true=250x)
 
 ## Quick start:
 
