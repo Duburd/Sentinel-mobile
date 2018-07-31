@@ -8,9 +8,9 @@ Sentinel was built using React and React Native. This repo is the `React` part o
 
 ## Screenshots:
 
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195228.png?raw=true =250x)
+![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195228.png =250x)
 
-![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195306.png?raw=true =250x)
+![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195306.png =250x)
 
 ![alt tag](https://github.com/Matt-Greff/Sentinel-mobile/blob/master/docs/Screenshot_20180730-195310.png?raw=true=250x)
 
